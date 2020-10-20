@@ -1729,9 +1729,9 @@
     "restore": {
       "projectUniqueName": "出席率変化の集計",
       "projectName": "出席率変化の集計",
-      "projectPath": "C:\\Users\\admin\\Documents\\UiPath\\出席率変化の集計\\.local",
+      "projectPath": "C:\\Users\\admin\\OneDrive\\ドキュメント\\UiPath\\出席率変化の集計\\.local",
       "packagesPath": "C:\\Users\\admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\admin\\Documents\\UiPath\\出席率変化の集計\\.local"
+      "outputPath": "C:\\Users\\admin\\OneDrive\\ドキュメント\\UiPath\\出席率変化の集計\\.local"
     },
     "frameworks": {
       "net461": {
