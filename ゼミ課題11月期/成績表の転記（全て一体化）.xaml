@@ -69,8 +69,11 @@
       <Variable x:TypeArguments="x:Int32" Name="index" />
       <Variable x:TypeArguments="ui:GenericValue" Name="subjectName" />
       <Variable x:TypeArguments="x:Int32" Default="3" Name="NINZU" />
-      <Variable x:TypeArguments="ui:GenericValue" Name="tmp" />
+      <Variable x:TypeArguments="x:Int32" Name="tmp" />
       <Variable x:TypeArguments="x:Int32" Name="writeCol" />
+      <Variable x:TypeArguments="x:Int32" Name="wIndex" />
+      <Variable x:TypeArguments="x:String" Name="rEndString" />
+      <Variable x:TypeArguments="x:Int32" Name="rEndIndex" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -216,33 +219,36 @@
                                   <av:Size x:Key="ShapeSize">200,51</av:Size>
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
-                              <ParallelForEach x:TypeArguments="x:String" DisplayName="並列繰り返し (コレクションの各要素)" sap:VirtualizedContainerService.HintSize="484,1281" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_4" Values="[ProcessingShhets]">
+                              <ParallelForEach x:TypeArguments="x:String" DisplayName="並列繰り返し (コレクションの各要素)" sap:VirtualizedContainerService.HintSize="484,1129" sap2010:WorkflowViewState.IdRef="ParallelForEach`1_4" Values="[ProcessingShhets]">
                                 <ActivityAction x:TypeArguments="x:String">
                                   <ActivityAction.Argument>
                                     <DelegateInArgument x:TypeArguments="x:String" Name="item" />
                                   </ActivityAction.Argument>
-                                  <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel アプリケーション スコープ" sap:VirtualizedContainerService.HintSize="434,1133" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" WorkbookPath="files\課題３\科目成績クラスデータ（dummy）.xlsm">
+                                  <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel アプリケーション スコープ" sap:VirtualizedContainerService.HintSize="434,981" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" InstanceCachePeriod="3000" WorkbookPath="files\課題３\科目成績クラスデータ（dummy）.xlsm">
                                     <ui:ExcelApplicationScope.Body>
                                       <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                                         <ActivityAction.Argument>
                                           <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
                                         </ActivityAction.Argument>
-                                        <Sequence DisplayName="実行" sap:VirtualizedContainerService.HintSize="376,781" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                                        <Sequence DisplayName="実行" sap:VirtualizedContainerService.HintSize="454,2055" sap2010:WorkflowViewState.IdRef="Sequence_3">
                                           <Sequence.Variables>
                                             <Variable x:TypeArguments="x:String" Name="writeIndex" />
                                             <Variable x:TypeArguments="ui:GenericValue" Name="score" />
+                                            <Variable x:TypeArguments="x:Int32" Name="rIndex" />
+                                            <Variable x:TypeArguments="x:String" Name="variable1" />
+                                            <Variable x:TypeArguments="ui:GenericValue" Name="tmpScore" />
                                           </Sequence.Variables>
                                           <sap:WorkflowViewStateService.ViewState>
                                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                                             </scg:Dictionary>
                                           </sap:WorkflowViewStateService.ViewState>
-                                          <ui:ExcelReadCell Cell="C8" DisplayName="科目名の読み込み" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="[item]">
+                                          <ui:ExcelReadCell Cell="C8" DisplayName="科目名の読み込み" sap:VirtualizedContainerService.HintSize="412,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="[item]">
                                             <ui:ExcelReadCell.Result>
                                               <OutArgument x:TypeArguments="ui:GenericValue">[subjectName]</OutArgument>
                                             </ui:ExcelReadCell.Result>
                                           </ui:ExcelReadCell>
-                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_4">
+                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_4">
                                             <Assign.To>
                                               <OutArgument x:TypeArguments="x:String">[writeIndex]</OutArgument>
                                             </Assign.To>
@@ -250,8 +256,8 @@
                                               <InArgument x:TypeArguments="x:String">[セル書き込み列(index)+"6"]</InArgument>
                                             </Assign.Value>
                                           </Assign>
-                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[&quot;セルの書き込み-&gt;&quot;+writeIndex]" />
-                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_5">
+                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="412,61" sap2010:WorkflowViewState.IdRef="WriteLine_8" Text="[&quot;セルの書き込み-&gt;&quot;+writeIndex]" />
+                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_5">
                                             <Assign.To>
                                               <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>
                                             </Assign.To>
@@ -259,9 +265,126 @@
                                               <InArgument x:TypeArguments="x:Int32">[index+1]</InArgument>
                                             </Assign.Value>
                                           </Assign>
-                                          <ui:ExcelWriteCell Cell="[writeIndex]" DisplayName="科目名の書き込み" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="学年末単位認定試験成績台帳(記録)" Text="[subjectName]" />
-                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="++++++++++++得点の転記++++++++++++++++" />
-                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="334,61" sap2010:WorkflowViewState.IdRef="WriteLine_7" Text="[index.ToString]" />
+                                          <ui:ExcelWriteCell Cell="[writeIndex]" DisplayName="科目名の書き込み" sap:VirtualizedContainerService.HintSize="412,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_1" SheetName="学年末単位認定試験成績台帳(記録)" Text="[subjectName]" />
+                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="412,61" sap2010:WorkflowViewState.IdRef="WriteLine_10" Text="++++++++++++得点の転記++++++++++++++++" />
+                                          <WriteLine DisplayName="1 行を書き込み" sap:VirtualizedContainerService.HintSize="412,61" sap2010:WorkflowViewState.IdRef="WriteLine_7" Text="[index.ToString]" />
+                                          <Flowchart DisplayName="フローチャート" sap:VirtualizedContainerService.HintSize="412,51" sap2010:WorkflowViewState.IdRef="Flowchart_2">
+                                            <Flowchart.Variables>
+                                              <Variable x:TypeArguments="x:Int32" Name="wIndex" />
+                                              <Variable x:TypeArguments="x:Int32" Name="rIndex" />
+                                              <Variable x:TypeArguments="x:Int32" Name="rEndIndex" />
+                                            </Flowchart.Variables>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                                                <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+                                                <av:Size x:Key="ShapeSize">60,75</av:Size>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                            <Flowchart.StartNode>
+                                              <x:Null />
+                                            </Flowchart.StartNode>
+                                          </Flowchart>
+                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_18">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Int32">[rIndex]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Int32">3</InArgument>
+                                            </Assign.Value>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </Assign>
+                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_17">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Int32">[rEndIndex]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Int32">[rIndex+NINZU]</InArgument>
+                                            </Assign.Value>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </Assign>
+                                          <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="412,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+                                            <Assign.To>
+                                              <OutArgument x:TypeArguments="x:Int32">[wIndex]</OutArgument>
+                                            </Assign.To>
+                                            <Assign.Value>
+                                              <InArgument x:TypeArguments="x:Int32">8</InArgument>
+                                            </Assign.Value>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </Assign>
+                                          <ui:InterruptibleWhile DisplayName="繰り返し (前判定)" sap:VirtualizedContainerService.HintSize="412,843" sap2010:WorkflowViewState.IdRef="InterruptibleWhile_2">
+                                            <ui:InterruptibleWhile.Body>
+                                              <Sequence DisplayName="本体" sap:VirtualizedContainerService.HintSize="376,678" sap2010:WorkflowViewState.IdRef="Sequence_5">
+                                                <Sequence.Variables>
+                                                  <Variable x:TypeArguments="x:String" Name="wIndexString" />
+                                                  <Variable x:TypeArguments="x:String" Name="rIndexString" />
+                                                </Sequence.Variables>
+                                                <sap:WorkflowViewStateService.ViewState>
+                                                  <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                    <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                                  </scg:Dictionary>
+                                                </sap:WorkflowViewStateService.ViewState>
+                                                <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_13">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:String">[rIndexString]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:String">["O"+rIndex.ToString]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <ui:ExcelReadCell Cell="[rIndexString]" DisplayName="セルを読み込み" sap:VirtualizedContainerService.HintSize="334,59" sap2010:WorkflowViewState.IdRef="ExcelReadCell_3" SheetName="[item]">
+                                                  <ui:ExcelReadCell.Result>
+                                                    <OutArgument x:TypeArguments="ui:GenericValue">[tmpScore]</OutArgument>
+                                                  </ui:ExcelReadCell.Result>
+                                                </ui:ExcelReadCell>
+                                                <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_14">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:String">[wIndexString]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:String">[セル書き込み列(wIndex-8).ToString]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <ui:ExcelWriteCell Cell="[wIndexString]" DisplayName="セルに書き込み" sap:VirtualizedContainerService.HintSize="334,87" sap2010:WorkflowViewState.IdRef="ExcelWriteCell_3" SheetName="学年末単位認定試験成績台帳(記録)" Text="[tmpScore]" />
+                                                <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_15">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Int32">[rIndex]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Int32">[rIndex+1]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                                <Assign DisplayName="代入" sap:VirtualizedContainerService.HintSize="334,60" sap2010:WorkflowViewState.IdRef="Assign_16">
+                                                  <Assign.To>
+                                                    <OutArgument x:TypeArguments="x:Int32">[wIndex]</OutArgument>
+                                                  </Assign.To>
+                                                  <Assign.Value>
+                                                    <InArgument x:TypeArguments="x:Int32">[wIndex+1]</InArgument>
+                                                  </Assign.Value>
+                                                </Assign>
+                                              </Sequence>
+                                            </ui:InterruptibleWhile.Body>
+                                            <ui:InterruptibleWhile.Condition>
+                                              <mva:VisualBasicValue x:TypeArguments="x:Boolean" ExpressionText="rIndex&lt;rEndIndex" sap2010:WorkflowViewState.IdRef="VisualBasicValue`1_2" />
+                                            </ui:InterruptibleWhile.Condition>
+                                            <sap:WorkflowViewStateService.ViewState>
+                                              <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                                <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                              </scg:Dictionary>
+                                            </sap:WorkflowViewStateService.ViewState>
+                                          </ui:InterruptibleWhile>
                                         </Sequence>
                                       </ActivityAction>
                                     </ui:ExcelApplicationScope.Body>
